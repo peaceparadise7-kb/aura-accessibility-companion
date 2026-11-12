@@ -1,0 +1,79 @@
+# Git Ignore for AURA Monorepo
+
+# Flutter & Dart
+.dart_tool/
+.packages
+build/
+.pub-cache/
+.pub/
+apps/mobile/.dart_tool/
+apps/mobile/.packages
+apps/mobile/build/
+apps/mobile/.pub-cache/
+apps/mobile/.pub/
+apps/admin_web/.dart_tool/
+apps/admin_web/.packages
+apps/admin_web/build/
+
+# Android Native
+native/android_ar/.gradle/
+native/android_ar/build/
+native/android_ar/local.properties
+*.iml
+.gradle/
+local.properties
+
+# iOS / macOS Native
+native/ios_ar/.build/
+native/ios_ar/.swiftpm/
+Pods/
+*.xcworkspace
+*.xcuserdatad
+*.xcuserstate
+
+# Python & Backend
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+backend/env/
+backend/venv/
+backend/.venv/
+.venv/
+env/
+venv/
+*.egg-info/
+.eggs/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Machine Learning
+ml/datasets/*
+!ml/datasets/.gitkeep
+ml/models/*.onnx
+ml/models/*.pt
+ml/models/*.tflite
+!ml/models/.gitkeep
+
+# IDE & Editors
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Environment & Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.jks

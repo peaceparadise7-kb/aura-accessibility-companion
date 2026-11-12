@@ -1,0 +1,48 @@
+name: Mobile CI (Flutter)
+
+on:
+  push:
+    branches: [ master, main, develop ]
+    paths:
+      - 'apps/mobile/**'
+      - 'shared/**'
+      - '.github/workflows/flutter.yml'
+  pull_request:
+    branches: [ master, main ]
+    paths:
+      - 'apps/mobile/**'
+      - 'shared/**'
+      - '.github/workflows/flutter.yml'
+
+jobs:
+  analyze-and-test:
+    name: Flutter Analyze & Test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/mobile
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter SDK
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Verify Flutter version
+        run: flutter --version
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Check Dart formatting
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: Static analysis
+        run: flutter analyze --fatal-infos --fatal-warnings
+
+      - name: Run unit and widget tests
+        run: flutter test --coverage

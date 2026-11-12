@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aura.accessibility/schemas/ar_event.schema.json",
+  "title": "NormalizedAREvent",
+  "description": "Normalized AR session event emitted by ARCore (Android) or ARKit (iOS) to the cross-platform Flutter application layer.",
+  "type": "object",
+  "required": ["eventType", "timestampMs", "sessionId"],
+  "properties": {
+    "eventType": {
+      "type": "string",
+      "enum": [
+        "tracking_state_changed",
+        "plane_detected",
+        "plane_updated",
+        "anchor_added",
+        "anchor_updated",
+        "frame_updated",
+        "session_error"
+      ]
+    },
+    "timestampMs": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "sessionId": {
+      "type": "string"
+    },
+    "trackingState": {
+      "type": "string",
+      "enum": ["not_tracking", "initializing", "tracking", "paused", "limited"]
+    },
+    "trackingReason": {
+      "type": "string",
+      "enum": ["none", "excessive_motion", "insufficient_features", "relocalizing", "unsupported"]
+    },
+    "plane": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "alignment": { "type": "string", "enum": ["horizontal_up", "horizontal_down", "vertical", "any"] },
+        "center": {
+          "type": "object",
+          "properties": {
+            "x": { "type": "number" },
+            "y": { "type": "number" },
+            "z": { "type": "number" }
+          }
+        },
+        "extentX": { "type": "number" },
+        "extentZ": { "type": "number" }
+      }
+    },
+    "anchor": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "transform": {
+          "type": "array",
+          "items": { "type": "number" },
+          "minItems": 16,
+          "maxItems": 16
+        }
+      }
+    },
+    "error": {
+      "type": "object",
+      "properties": {
+        "code": { "type": "string" },
+        "message": { "type": "string" }
+      }
+    }
+  }
+}

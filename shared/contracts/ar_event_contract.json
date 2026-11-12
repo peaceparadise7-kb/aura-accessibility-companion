@@ -1,0 +1,55 @@
+{
+  "contractName": "AuraAREventContract",
+  "version": "1.0.0",
+  "description": "Standardized interface specification governing bi-directional communication between Flutter Platform Channels and Native AR Engines (ARCore on Android, ARKit on iOS).",
+  "channels": {
+    "methodChannel": "com.aura.app/ar_session_control",
+    "eventChannel": "com.aura.app/ar_session_events"
+  },
+  "methods": [
+    {
+      "name": "initializeSession",
+      "parameters": {
+        "planeDetection": ["vertical", "horizontal"],
+        "enableLightEstimation": true,
+        "enableDepth": false
+      },
+      "returns": "boolean"
+    },
+    {
+      "name": "pauseSession",
+      "parameters": {},
+      "returns": "boolean"
+    },
+    {
+      "name": "resumeSession",
+      "parameters": {},
+      "returns": "boolean"
+    },
+    {
+      "name": "disposeSession",
+      "parameters": {},
+      "returns": "boolean"
+    },
+    {
+      "name": "addAnchor",
+      "parameters": {
+        "x": "number",
+        "y": "number"
+      },
+      "returns": {
+        "anchorId": "string",
+        "transform": "array[16] of float"
+      }
+    }
+  ],
+  "normalizedEventTypes": [
+    "tracking_state_changed",
+    "plane_detected",
+    "plane_updated",
+    "anchor_added",
+    "anchor_updated",
+    "frame_updated",
+    "session_error"
+  ]
+}

@@ -1,0 +1,124 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "AURA Appliance Profile & Telemetry API",
+    "version": "1.0.0",
+    "description": "Backend API providing verified household appliance profiles, synchronization catalog, and diagnostics for AURA."
+  },
+  "paths": {
+    "/api/v1/health": {
+      "get": {
+        "summary": "Health check",
+        "operationId": "getHealth",
+        "responses": {
+          "200": {
+            "description": "Service is healthy",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "example": "healthy" },
+                    "timestamp": { "type": "string", "format": "date-time" },
+                    "version": { "type": "string", "example": "1.0.0" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/profiles": {
+      "get": {
+        "summary": "List or search verified appliance profiles",
+        "operationId": "listProfiles",
+        "parameters": [
+          {
+            "name": "category",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of appliance profiles",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/ApplianceProfileSummary" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/profiles/{profile_id}": {
+      "get": {
+        "summary": "Retrieve complete verified appliance profile by ID",
+        "operationId": "getProfileById",
+        "parameters": [
+          {
+            "name": "profile_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detailed appliance profile with control panel geometry",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ApplianceProfileDetail" }
+              }
+            }
+          },
+          "404": {
+            "description": "Profile not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ApplianceProfileSummary": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "manufacturer": { "type": "string" },
+          "modelNumber": { "type": "string" },
+          "category": { "type": "string" },
+          "version": { "type": "string" }
+        }
+      },
+      "ApplianceProfileDetail": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "manufacturer": { "type": "string" },
+          "modelNumber": { "type": "string" },
+          "category": { "type": "string" },
+          "schemaVersion": { "type": "string" },
+          "verificationStatus": { "type": "string" },
+          "controls": {
+            "type": "array",
+            "items": { "type": "object" }
+          }
+        }
+      }
+    }
+  }
+}

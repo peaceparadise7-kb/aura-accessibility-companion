@@ -1,0 +1,162 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aura.accessibility/schemas/appliance_profile.schema.json",
+  "title": "ApplianceProfile",
+  "description": "Schema for verified household appliance profiles used by AURA for offline and online recognition and AR control mapping.",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "manufacturer",
+    "modelNumber",
+    "category",
+    "schemaVersion",
+    "controls",
+    "verificationStatus"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the appliance profile (e.g., panasonic_nn_sd372s_microwave)"
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable appliance name"
+    },
+    "manufacturer": {
+      "type": "string",
+      "description": "Appliance manufacturer or brand name"
+    },
+    "modelNumber": {
+      "type": "string",
+      "description": "Manufacturer model number or family code"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "microwave",
+        "washing_machine",
+        "refrigerator",
+        "dishwasher",
+        "air_conditioner",
+        "oven",
+        "other"
+      ],
+      "description": "Household appliance category"
+    },
+    "schemaVersion": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+      "description": "Semantic version of the profile schema"
+    },
+    "verificationStatus": {
+      "type": "string",
+      "enum": ["verified", "community_submitted", "deprecated"],
+      "description": "Quality assurance and verification status"
+    },
+    "panelDimensions": {
+      "type": "object",
+      "properties": {
+        "widthMm": { "type": "number", "minimum": 0 },
+        "heightMm": { "type": "number", "minimum": 0 },
+        "aspectRatio": { "type": "number", "minimum": 0 }
+      }
+    },
+    "visualAnchors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "anchorType", "relativePosition"],
+        "properties": {
+          "id": { "type": "string" },
+          "anchorType": {
+            "type": "string",
+            "enum": ["logo", "display_screen", "door_handle", "knob_center"]
+          },
+          "relativePosition": {
+            "type": "object",
+            "required": ["x", "y"],
+            "properties": {
+              "x": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+              "y": { "type": "number", "minimum": 0.0, "maximum": 1.0 }
+            }
+          }
+        }
+      }
+    },
+    "controls": {
+      "type": "array",
+      "description": "List of physical controls, buttons, dials, and touch elements",
+      "items": {
+        "$ref": "#/$defs/ControlElement"
+      }
+    }
+  },
+  "$defs": {
+    "ControlElement": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "type",
+        "normalizedBoundingBox",
+        "functionDescription",
+        "audioCueText"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for this specific control element"
+        },
+        "name": {
+          "type": "string",
+          "description": "Primary label or common name (e.g., 'Start / +30s')"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "button",
+            "dial",
+            "switch_toggle",
+            "display",
+            "touch_pad",
+            "slider",
+            "knob"
+          ]
+        },
+        "normalizedBoundingBox": {
+          "type": "object",
+          "description": "Normalized coordinates relative to the control panel (0.0 to 1.0)",
+          "required": ["left", "top", "right", "bottom"],
+          "properties": {
+            "left": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+            "top": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+            "right": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+            "bottom": { "type": "number", "minimum": 0.0, "maximum": 1.0 }
+          }
+        },
+        "ocrKeyTerms": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Expected OCR texts or printed keywords near or on this button"
+        },
+        "functionDescription": {
+          "type": "string",
+          "description": "Clear explanation of what the physical control does"
+        },
+        "audioCueText": {
+          "type": "string",
+          "description": "Concise text-to-speech announcement for accessibility screen reader"
+        },
+        "tactileFeature": {
+          "type": "string",
+          "description": "Physical tactile properties (e.g., raised bump, indented, rotary click)"
+        },
+        "safetyWarning": {
+          "type": "string",
+          "description": "Cautionary notice (e.g., 'Pressing this starts immediate microwave heating at high power')"
+        }
+      }
+    }
+  }
+}

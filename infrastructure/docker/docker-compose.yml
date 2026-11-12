@@ -1,0 +1,50 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: ../../backend
+      dockerfile: Dockerfile
+    container_name: aura-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - POSTGRES_SERVER=db
+      - POSTGRES_USER=aura_user
+      - POSTGRES_PASSWORD=aura_secret
+      - POSTGRES_DB=aura_db
+      - POSTGRES_PORT=5432
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - aura-network
+
+  db:
+    image: postgres:16-alpine
+    container_name: aura-postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=aura_user
+      - POSTGRES_PASSWORD=aura_secret
+      - POSTGRES_DB=aura_db
+    volumes:
+      - aura_pg_data:/var/lib/postgresql/data
+      - ./postgres_init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U aura_user -d aura_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - aura-network
+
+networks:
+  aura-network:
+    driver: bridge
+
+volumes:
+  aura_pg_data:

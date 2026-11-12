@@ -1,0 +1,92 @@
+{
+  "id": "panasonic_nn_sd372s_microwave",
+  "name": "Panasonic Inverter Microwave Oven NN-SD372S",
+  "manufacturer": "Panasonic",
+  "modelNumber": "NN-SD372S",
+  "category": "microwave",
+  "schemaVersion": "1.0.0",
+  "verificationStatus": "verified",
+  "panelDimensions": {
+    "widthMm": 95.0,
+    "heightMm": 285.0,
+    "aspectRatio": 0.333
+  },
+  "visualAnchors": [
+    {
+      "id": "panasonic_logo",
+      "anchorType": "logo",
+      "relativePosition": { "x": 0.5, "y": 0.05 }
+    },
+    {
+      "id": "lcd_display",
+      "anchorType": "display_screen",
+      "relativePosition": { "x": 0.5, "y": 0.18 }
+    }
+  ],
+  "controls": [
+    {
+      "id": "ctrl_start_add30s",
+      "name": "Start / Quick 30",
+      "type": "button",
+      "normalizedBoundingBox": {
+        "left": 0.55,
+        "top": 0.78,
+        "right": 0.92,
+        "bottom": 0.88
+      },
+      "ocrKeyTerms": ["Start", "Quick 30", "+30s"],
+      "functionDescription": "Starts microwave cooking or adds 30 seconds at high power.",
+      "audioCueText": "Start and Quick thirty seconds button. Located at the bottom right.",
+      "tactileFeature": "Smooth round tactile button with raised center pip",
+      "safetyWarning": "Starts immediate heating when door is securely latched."
+    },
+    {
+      "id": "ctrl_stop_reset",
+      "name": "Stop / Reset",
+      "type": "button",
+      "normalizedBoundingBox": {
+        "left": 0.08,
+        "top": 0.78,
+        "right": 0.45,
+        "bottom": 0.88
+      },
+      "ocrKeyTerms": ["Stop", "Reset", "Clear"],
+      "functionDescription": "Cancels current operation or resets cooking time to zero.",
+      "audioCueText": "Stop and Reset button. Located at the bottom left.",
+      "tactileFeature": "Smooth round tactile button with indented center",
+      "safetyWarning": "Cancels ongoing heating immediately."
+    },
+    {
+      "id": "ctrl_power_level",
+      "name": "Power Level",
+      "type": "button",
+      "normalizedBoundingBox": {
+        "left": 0.08,
+        "top": 0.32,
+        "right": 0.48,
+        "bottom": 0.40
+      },
+      "ocrKeyTerms": ["Power", "Level", "Micro Power"],
+      "functionDescription": "Cycles through microwave power levels from 10 percent to 100 percent.",
+      "audioCueText": "Power level button. Second row, left side.",
+      "tactileFeature": "Flat membrane button",
+      "safetyWarning": "Default is high power (1000 watts)."
+    },
+    {
+      "id": "ctrl_defrost",
+      "name": "Inverter Turbo Defrost",
+      "type": "button",
+      "normalizedBoundingBox": {
+        "left": 0.52,
+        "top": 0.32,
+        "right": 0.92,
+        "bottom": 0.40
+      },
+      "ocrKeyTerms": ["Turbo", "Defrost", "Auto"],
+      "functionDescription": "Selects weight-based automated defrost cycle.",
+      "audioCueText": "Turbo defrost button. Second row, right side.",
+      "tactileFeature": "Flat membrane button",
+      "safetyWarning": "Requires setting food weight before starting."
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+name: Repository & Contract Validation
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+
+jobs:
+  validate-contracts-and-schemas:
+    name: Schema & Structure Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run Schema Validator
+        run: python infrastructure/ci/validate_schemas.py
+
+  validate-ios-native:
+    name: Native iOS Package Tests
+    runs-on: macos-14
+    defaults:
+      run:
+        working-directory: native/ios_ar
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Run Swift Package Tests
+        run: swift test
